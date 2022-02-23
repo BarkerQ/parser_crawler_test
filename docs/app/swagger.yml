@@ -1,0 +1,61 @@
+openapi: 3.0.0
+info:
+  title: Parser Grabber API
+  description: '* **x-api-key**: api_key'
+  version: '1.0.0'
+paths:
+  /parse:
+    post:
+      tags:
+        - parser
+      security:
+        - apiKeyAuth: [ ]
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                urls:
+                  type: array
+                  items:
+                    type: string
+                    example: "https://www.google.ru/"
+      summary: Parse title from url's
+      responses:
+        '200':
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Category'
+        '500':
+          description: Server Error
+        '400':
+          description: Bad request
+
+components:
+  securitySchemes:
+    apiKeyAuth:
+      type: apiKey
+      in: header
+      name: x-api-key
+
+  schemas:
+    Category:
+      type: object
+      required:
+        - title
+        - url
+      properties:
+        title:
+          type: string
+          description: Url source
+          example: "https://www.google.ru"
+        url:
+          type: string
+          description: Title source
+          example: "Google"
