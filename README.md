@@ -19,5 +19,5 @@
 
 ~~~
 docker build -t parser_image .
-docker run --name=parser_container -p 8080:8080 parser_image
+docker run --name=parser_container -d -p 8080:8080 parser_image
 ~~~
